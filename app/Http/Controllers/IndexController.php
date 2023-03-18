@@ -36,8 +36,15 @@ class IndexController extends Controller
     }
     public function payments(){
         $cars = Carlist::all();
+        $washers = Washer::all();
+        $mpesas = Carlist::where('payment_method',1)->get();
+        $cashs = Carlist::where('payment_method',2)->get();
         return view('payments',[
-            'cars'=>$cars
+            'cars'=>$cars,
+            'mpesas'=>$mpesas,
+            'cashs'=>$cashs,
+            'washers'=>$washers,
+
         ]);
     }
     public function charges(){

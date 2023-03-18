@@ -45,13 +45,13 @@
 </span>
                 </a>
                 <a href="index.html" class="navbar-brand logo">
-                    <img src="assets/img/log.png" class="img-fluid" alt="Logo">
+                    <img src="assets/img/logo.jpg" class="img-fluid" alt="Logo">
                 </a>
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
                     <a href="index.html" class="menu-logo">
-                        <img src="assets/img/log.png" class="img-fluid" alt="Logo">
+                        <img src="assets/img/logo.jpg" class="img-fluid" alt="Logo">
                     </a>
                     <a id="menu_close" class="menu-close" href="javascript:void(0);">
                         <i class="fas fa-times"></i>
@@ -118,32 +118,33 @@
                     <p style="font-size: large">Profit:Ksh <b>{{\App\Models\Carlist::sum('amount') - \App\Models\Washer::sum('amount')}}</b></p>
                     <div class="card">
                         <div class="card-body pt-0">
-
-                            <nav class="user-tabs mb-4">
+<br>
+                            <nav>
                                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#pat_appointments" data-bs-toggle="tab" style="color: red">Payments <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> {{\App\Models\Carlist::sum('amount')}}</span></a>
+                                    <li class="nav-item" id="payNav">
+                                        <a href="#pat_appointments" data-bs-toggle="tab" style="color: red" id="paymentsTotal">Payments <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> <b>{{\App\Models\Carlist::sum('amount')}}</b></span></a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab" style="color: blue">Worker Salary <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> {{\App\Models\Washer::sum('amount')}}</span></a>
+                                    <li class="nav-item" id="workerNav">
+                                        <a href="#pat_prescriptions" data-bs-toggle="tab" style="color: blue" id="workerSalary">Worker Salary <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> <b>{{\App\Models\Washer::sum('amount')}}</b></span></a>
                                     </li>
                                 </ul>
                             </nav>
-                            <nav class="user-tabs mb-4">
+                            <br>
+                            <nav>
                                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#pat_appointments" data-bs-toggle="tab" style="color: red">MPESA <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> {{\App\Models\Carlist::where('payment_method',1)->sum('amount')}}</span></a>
+                                    <li class="nav-item" id="mpesaNav">
+                                        <a href="#pat_mpesa" data-bs-toggle="tab" style="color: red" id="button_mpesa">MPESA <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{\App\Models\Carlist::where('payment_method',1)->sum('amount')}}</b></span></a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab" style="color: blue">CASH <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> {{\App\Models\Carlist::where('payment_method',2)->sum('amount')}}</span></a>
+                                    <li class="nav-item" id="cashNav">
+                                        <a href="#pat_cash" data-bs-toggle="tab" style="color: blue" id="button_cash">CASH <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{\App\Models\Carlist::where('payment_method',2)->sum('amount')}}</b></span></a>
                                     </li>
                                 </ul>
                             </nav>
 
-
+<br>
                             <div class="tab-content pt-0">
 
-                                <div id="pat_appointments" class="tab-pane fade show active">
+                                <div class="tab-pane fade show active" id="pat_appointments">
                                     <div class="card card-table mb-0">
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -174,14 +175,6 @@
 
                                                         </tr>
                                                     @endforeach
-                                                    <tr>
-                                                        <td>12/02/2023</td>
-                                                        <td>KBG 490F</td>
-                                                        <td>MAXMILLAN NDEGWA KIBE</td>
-                                                        <td>Ksh 100</td>
-                                                        <td><span class="badge rounded-pill bg-success-light">Mpesa</span></td>
-
-                                                    </tr>
 
                                                     </tbody>
                                                 </table>
@@ -189,8 +182,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="tab-pane fade" id="pat_prescriptions">
                                     <div class="card card-table mb-0">
                                         <div class="card-body">
@@ -198,19 +189,97 @@
                                                 <table class="table table-hover table-center mb-0">
                                                     <thead>
                                                     <tr>
-                                                        <th>Date</th>
                                                         <th>Name</th>
+                                                        <th>Phone</th>
                                                         <th>Rate</th>
                                                         <th>Amount</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
+                                                    @foreach($washers as $washer)
+                                                        <tr>
+                                                            <td>{{$washer->first_name}} {{$washer->last_name}}</td>
+                                                            <td>{{$washer->phone}}</td>
+                                                            <td>{{$washer->rate}}%</td>
+                                                            <td>Ksh {{$washer->amount}}</td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pat_mpesa">
+                                    <div class="card card-table mb-0">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-center mb-0">
+                                                    <thead>
                                                     <tr>
-                                                        <td>12/02/2023</td>
-                                                        <td>MAXMILLAN NDEGWA KIBE</td>
-                                                        <td>25%</td>
-                                                        <td>Ksh 100</td>
+                                                        <th>Date</th>
+                                                        <th>Number Plate</th>
+                                                        <th>Washer</th>
+                                                        <th>Amount</th>
+                                                        <th>Payment Method</th>
                                                     </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($mpesas as $mpesa)
+                                                        <tr>
+                                                            <td>{{Carbon\Carbon::parse($mpesa->date)->format('d/m/Y') }}</td>
+                                                            <td>{{$mpesa->number_plate}}</td>
+                                                            <td>{{$mpesa->washer->first_name}} {{$mpesa->washer->last_name}}</td>
+                                                            <td>Ksh {{$mpesa->amount}}</td>
+                                                            @if($mpesa->payment_method==1)
+                                                                <td><span class="badge rounded-pill bg-success-light">Mpesa</span></td>
+
+                                                            @else
+                                                                <td><span class="badge rounded-pill bg-primary-light">Cash</span></td>
+
+                                                            @endif
+
+                                                        </tr>
+                                                    @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade"  id="pat_cash">
+                                    <div class="card card-table mb-0">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-center mb-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Number Plate</th>
+                                                        <th>Washer</th>
+                                                        <th>Amount</th>
+                                                        <th>Payment Method</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($cashs as $cash)
+                                                        <tr>
+                                                            <td>{{Carbon\Carbon::parse($cash->date)->format('d/m/Y') }}</td>
+                                                            <td>{{$cash->number_plate}}</td>
+                                                            <td>{{$cash->washer->first_name}} {{$cash->washer->last_name}}</td>
+                                                            <td>Ksh {{$cash->amount}}</td>
+                                                            @if($cash->payment_method==1)
+                                                                <td><span class="badge rounded-pill bg-success-light">Mpesa</span></td>
+
+                                                            @else
+                                                                <td><span class="badge rounded-pill bg-primary-light">Cash</span></td>
+
+                                                            @endif
+
+                                                        </tr>
+                                                    @endforeach
 
                                                     </tbody>
                                                 </table>
@@ -268,15 +337,51 @@
 <!-- Mirrored from doccure-laravel.dreamguystech.com/template-cardiology/public/patient-dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Oct 2022 14:55:09 GMT -->
 </html>
 <script>
-    $(document).ready(function(){
-        // alert(1);
-        /*$('.submenu li a').click(function(){
-          $(.submenu li a).removeClass("active");
-          $(this).addClass("active");
-          $('.has-submenu a').removeClass("active");
-          $('.has-submenu a').addClass("active");
+    $(document).ready(function () {
+        document.getElementById('payNav').style.backgroundColor = "lightgray";
 
-          //$(this).toggleClass("active");
-        });*/
+    });
+    $('#workerSalary').click(function () {
+        $('#pat_appointments').hide();
+        $('#pat_cash').hide();
+        $('#pat_mpesa').hide();
+        $('#pat_prescriptions').show();
+        document.getElementById('workerNav').style.backgroundColor = "lightgray";
+        document.getElementById('payNav').style.backgroundColor = "";
+        document.getElementById('mpesaNav').style.backgroundColor = "";
+        document.getElementById('cashNav').style.backgroundColor = "";
+
+    });
+    $('#paymentsTotal').click(function () {
+        $('#pat_prescriptions').hide();
+        $('#pat_cash').hide();
+        $('#pat_mpesa').hide();
+        $('#pat_appointments').show();
+        document.getElementById('payNav').style.backgroundColor = "lightgray";
+        document.getElementById('workerNav').style.backgroundColor = "";
+        document.getElementById('mpesaNav').style.backgroundColor = "";
+        document.getElementById('cashNav').style.backgroundColor = "";
+
+    });
+    $('#button_mpesa').click(function () {
+        $('#pat_appointments').hide();
+        $('#pat_prescriptions').hide();
+        $('#pat_cash').hide();
+        $('#pat_mpesa').show();
+        document.getElementById('mpesaNav').style.backgroundColor = "lightgray";
+        document.getElementById('payNav').style.backgroundColor = "";
+        document.getElementById('workerNav').style.backgroundColor = "";
+        document.getElementById('cashNav').style.backgroundColor = "";
+
+    });
+    $('#button_cash').click(function () {
+        $('#pat_appointments').hide();
+        $('#pat_prescriptions').hide();
+        $('#pat_mpesa').hide();
+        $('#pat_cash').show();
+        document.getElementById('cashNav').style.backgroundColor = "lightgray";
+        document.getElementById('mpesaNav').style.backgroundColor = "";
+        document.getElementById('payNav').style.backgroundColor = "";
+        document.getElementById('workerNav').style.backgroundColor = "";
     });
 </script>

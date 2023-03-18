@@ -44,7 +44,7 @@
 </span>
                 </a>
                 <a href="index.html" class="navbar-brand logo">
-                    <img src="assets/img/log.png" class="img-fluid" alt="Logo">
+                    <img src="assets/img/logo.jpg" class="img-fluid" alt="Logo">
                 </a>
             </div>
 
