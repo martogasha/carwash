@@ -115,14 +115,15 @@
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-12 col-xl-12" style="text-align: center">
-                    <p style="font-size: large">Profit:Ksh <b>{{\App\Models\Carlist::sum('amount') - \App\Models\Washer::sum('amount')}}</b></p>
+
+                    <p style="font-size: large">Today: {{\Carbon\Carbon::now()->format('d/m/Y')}}</p>
                     <div class="card">
                         <div class="card-body pt-0">
 <br>
                             <nav>
                                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                     <li class="nav-item" id="payNav">
-                                        <a href="#pat_appointments" data-bs-toggle="tab" style="color: red" id="paymentsTotal">Payments <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> <b>{{\App\Models\Carlist::sum('amount')}}</b></span></a>
+                                        <a href="#pat_appointments" data-bs-toggle="tab" style="color: red" id="paymentsTotal">Payments <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> <b>{{\App\Models\Carlist::where('date',\Carbon\Carbon::now()->format('d/m/Y'))->sum('amount')}}</b></span></a>
                                     </li>
                                     <li class="nav-item" id="workerNav">
                                         <a href="#pat_prescriptions" data-bs-toggle="tab" style="color: blue" id="workerSalary">Worker Salary <span style="color: black;font-size: larger"><i style="font-size: smaller">Total:<br>Ksh</i> <b>{{\App\Models\Washer::sum('amount')}}</b></span></a>
@@ -133,10 +134,10 @@
                             <nav>
                                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                     <li class="nav-item" id="mpesaNav">
-                                        <a href="#pat_mpesa" data-bs-toggle="tab" style="color: red" id="button_mpesa">MPESA <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{\App\Models\Carlist::where('payment_method',1)->sum('amount')}}</b></span></a>
+                                        <a href="#pat_mpesa" data-bs-toggle="tab" style="color: red" id="button_mpesa">MPESA <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{\App\Models\Carlist::where('payment_method',1)->where('date',\Carbon\Carbon::now()->format('d/m/Y'))->sum('amount')}}</b></span></a>
                                     </li>
                                     <li class="nav-item" id="cashNav">
-                                        <a href="#pat_cash" data-bs-toggle="tab" style="color: blue" id="button_cash">CASH <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{\App\Models\Carlist::where('payment_method',2)->sum('amount')}}</b></span></a>
+                                        <a href="#pat_cash" data-bs-toggle="tab" style="color: blue" id="button_cash">CASH <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{\App\Models\Carlist::where('payment_method',2)->where('date',\Carbon\Carbon::now()->format('d/m/Y'))->sum('amount')}}</b></span></a>
                                     </li>
                                 </ul>
                             </nav>
@@ -161,7 +162,7 @@
                                                     <tbody>
                                                     @foreach($cars as $car)
                                                         <tr>
-                                                            <td>{{Carbon\Carbon::parse($car->date)->format('d/m/Y') }}</td>
+                                                            <td>{{$car->date}}</td>
                                                             <td>{{$car->number_plate}}</td>
                                                             <td>{{$car->washer->first_name}} {{$car->washer->last_name}}</td>
                                                             <td>Ksh {{$car->amount}}</td>
@@ -228,7 +229,7 @@
                                                     <tbody>
                                                     @foreach($mpesas as $mpesa)
                                                         <tr>
-                                                            <td>{{Carbon\Carbon::parse($mpesa->date)->format('d/m/Y') }}</td>
+                                                            <td>{{$mpesa->date}}</td>
                                                             <td>{{$mpesa->number_plate}}</td>
                                                             <td>{{$mpesa->washer->first_name}} {{$mpesa->washer->last_name}}</td>
                                                             <td>Ksh {{$mpesa->amount}}</td>
@@ -266,7 +267,7 @@
                                                     <tbody>
                                                     @foreach($cashs as $cash)
                                                         <tr>
-                                                            <td>{{Carbon\Carbon::parse($cash->date)->format('d/m/Y') }}</td>
+                                                            <td>{{$cash->date}}</td>
                                                             <td>{{$cash->number_plate}}</td>
                                                             <td>{{$cash->washer->first_name}} {{$cash->washer->last_name}}</td>
                                                             <td>Ksh {{$cash->amount}}</td>

@@ -114,13 +114,12 @@
 
                 </div>
                 @include('flash-message')
+                <p style="text-align: center">Today:<b>{{\Carbon\Carbon::now()->format('d/m/Y')}}</b></p>
+
                 <div class="row">
-                    <div class="col-12 col-sm-8 col-md-6 text-end">
-                        <div class="bookingrange btn btn-white btn-sm mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>
-                            <span></span>
-                            <i class="fas fa-chevron-down ms-2"></i>
-                        </div>
+                    <div class="col-lg-12 col-12 form-group">
+                        <label>Search</label>
+                        <input type="text" placeholder="Search" class="form-control" id="myInput">
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-12 col-xl-12">
@@ -148,18 +147,16 @@
                                                         <th>Date</th>
                                                         <th>Number Plate</th>
                                                         <th>Phone Number</th>
-                                                        <th>Type</th>
                                                         <th>Washer</th>
                                                         <th>Amount</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody id="myTable">
                                                     @foreach($cars as $car)
                                                         <tr>
-                                                            <td>{{Carbon\Carbon::parse($car->date)->format('d/m/Y') }}</td>
+                                                            <td>{{$car->date}}</td>
                                                             <td>{{$car->number_plate}}</td>
                                                             <td>{{$car->phone}}</td>
-                                                            <td>{{$car->charge->car_type}}</td>
                                                             <td>{{$car->washer->first_name}} {{$car->washer->last_name}}</td>
                                                             <td>Ksh {{$car->amount}}</td>
                                                         </tr>
@@ -194,13 +191,6 @@
             <form action="{{url('addCar')}}" method="post">
                 @csrf
                 <div class="modal-body">
-
-                    <div>
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="date" class="form-control" name="date">
-                        </div>
-                    </div>
                     <div>
                         <div class="form-group">
                             <label>Number Plate</label>
@@ -213,17 +203,7 @@
                             <input type="text" class="form-control" name="phone" placeholder="Phone Number">
                         </div>
                     </div>
-                    <div>
-                        <div class="form-group">
-                            <label>Type</label>
-                            <select class="form-control select" name="charge_id" id="carCharge">
-                                @foreach($charges as $charge)
-                                    <option value="{{$charge->id}}">{{$charge->car_type}} {{$charge->car_amount}}</option>
-                                @endforeach
 
-                            </select>
-                        </div>
-                    </div>
                     <div id="paymentMethod">
                         <div class="form-group">
                             <label>Washer</label>
@@ -311,6 +291,14 @@
 
             }
 
+        });
+    });
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
         });
     });
 </script>

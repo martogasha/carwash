@@ -6,6 +6,7 @@ use App\Models\Carlist;
 use App\Models\Charge;
 use App\Models\Rate;
 use App\Models\Washer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -13,7 +14,7 @@ class IndexController extends Controller
     public function cars(){
         $charges = Charge::all();
         $washers = Washer::all();
-        $cars = Carlist::all();
+        $cars = Carlist::where('id','>',0)->orderByDesc('id')->get();
         return view('cars',[
             'charges'=>$charges,
             'washers'=>$washers,
@@ -72,10 +73,9 @@ class IndexController extends Controller
     }
     public function addCar(Request $request){
         $charge = new Carlist();
-        $charge->date = $request->input('date');
+        $charge->date = Carbon::now()->format('d/m/Y');
         $charge->number_plate = $request->input('number_plate');
         $charge->phone = $request->input('phone');
-        $charge->charge_id = $request->input('charge_id');
         $charge->washer_id = $request->input('washer_id');
         $charge->amount = $request->input('amount');
         $charge->payment_method = $request->input('payment_method');
