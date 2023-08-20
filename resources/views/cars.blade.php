@@ -44,7 +44,7 @@
 <span></span>
 </span>
                 </a>
-                <a href="index.html" class="navbar-brand logo">
+                <a href="{{url('/')}}" class="navbar-brand logo">
                     <img src="assets/img/logo.jpg" class="img-fluid" alt="Logo">
                   </a>
             </div>

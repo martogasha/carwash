@@ -43,7 +43,7 @@
 <span></span>
 </span>
                 </a>
-                <a href="index.html" class="navbar-brand logo">
+                <a href="{{url('/')}}" class="navbar-brand logo">
                     <img src="assets/img/logo.jpg" class="img-fluid" alt="Logo">
                 </a>
             </div>
@@ -81,7 +81,7 @@
                     <div style="margin-bottom: 3em;" class="app">
                         <ul class="list" style="display: contents;">
                             <li style="display: block;">
-                                <a href="{{url('cars')}}" target="_blank" class="card tile text-dark">
+                                <a href="{{url('cars')}}" class="card tile text-dark">
                                     <div class="card-header topper"></div>
                                     <div style="display: flex;background-color: #00d285" class="card-body flex-column">
                                         <strong class="display-4 Title">CARS</strong>
@@ -90,7 +90,7 @@
                                 </a>
                             </li>
                             <li style="display: block;">
-                                <a href="{{url('washers')}}" target="_blank" class="card tile text-dark">
+                                <a href="{{url('washers')}}" class="card tile text-dark">
                                     <div class="card-header topper"></div>
                                     <div style="display: flex;background-color:blue" class="card-body flex-column">
                                         <strong class="display-4 Title">WASHERS</strong>
@@ -99,7 +99,7 @@
                                 </a>
                             </li>
                             <li style="display: block;">
-                                <a href="{{url('payments')}}" target="_blank" class="card tile text-dark">
+                                <a href="{{url('payments')}}" class="card tile text-dark">
                                     <div class="card-header topper"></div>
                                     <div style="display: flex;background-color:red" class="card-body flex-column">
                                         <strong class="display-4 Title">PAYMENTS</strong>
@@ -108,7 +108,7 @@
                                 </a>
                             </li>
                             <li style="display: block;">
-                                <a href="{{url('charges')}}" target="_blank" class="card tile text-dark">
+                                <a href="{{url('charges')}}" class="card tile text-dark">
                                     <div class="card-header topper"></div>
                                     <div style="display: flex;background-color:violet" class="card-body flex-column">
                                         <strong class="display-4 Title">CHARGES</strong>
