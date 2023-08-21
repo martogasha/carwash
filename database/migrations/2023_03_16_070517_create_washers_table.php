@@ -19,7 +19,6 @@ class CreateWashersTable extends Migration
             $table->string('last_name');
             $table->string('phone');
             $table->integer('rate')->nullable();
-            $table->integer('amount')->nullable();
             $table->timestamps();
         });
     }

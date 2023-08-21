@@ -17,6 +17,8 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->integer('washer_id');
             $table->integer('amount');
+            $table->string('from');
+            $table->string('to');
             $table->timestamps();
         });
     }

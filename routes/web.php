@@ -20,7 +20,11 @@ Route::get('/', function () {
 Route::get('cars', [IndexController::class, 'cars']);
 Route::get('washers', [IndexController::class, 'washers']);
 Route::get('payments', [IndexController::class, 'payments']);
+Route::get('washerDetail/{id}', [IndexController::class, 'washerDetail']);
 Route::get('charges', [IndexController::class, 'charges']);
+Route::get('filterDate', [IndexController::class, 'filterDate']);
+Route::get('filterD', [IndexController::class, 'filterD']);
+Route::get('filterWasher', [IndexController::class, 'filterWasher']);
 Route::get('editCharge', [IndexController::class, 'editCharge']);
 Route::get('editRate', [IndexController::class, 'editRate']);
 Route::get('editWasher', [IndexController::class, 'editWasher']);

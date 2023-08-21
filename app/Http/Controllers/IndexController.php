@@ -14,11 +14,30 @@ class IndexController extends Controller
     public function cars(){
         $charges = Charge::all();
         $washers = Washer::all();
-        $cars = Carlist::where('id','>',0)->orderByDesc('id')->get();
+        $date = Carbon::now()->format('d/m/Y');
+        $cars = Carlist::where('id','>',0)->where('date',Carbon::now()->format('d/m/Y'))->orderByDesc('id')->get();
         return view('cars',[
             'charges'=>$charges,
             'washers'=>$washers,
-            'cars'=>$cars
+            'cars'=>$cars,
+            't'=>$date
+
+        ]);
+    }
+    public function filterD(Request $request){
+        $from = date('d/m/Y', strtotime($request->from));
+        $to = date('d/m/Y', strtotime($request->to));
+        $charges = Charge::all();
+        $washers = Washer::all();
+        $cars = Carlist::where('id','>',0)->whereBetween('date', [$from,$to])->orderByDesc('id')->get();
+        $f = $from;
+        $t = $to;
+        return view('cars',[
+            'charges'=>$charges,
+            'washers'=>$washers,
+            'cars'=>$cars,
+            'f'=>$f,
+            't'=>$t,
 
         ]);
     }
@@ -35,16 +54,106 @@ class IndexController extends Controller
             'washers'=>$washers
         ]);
     }
-    public function payments(){
-        $cars = Carlist::all();
+    public function filterDate(Request $request){
+        $from = date('d/m/Y', strtotime($request->from));
+        $to = date('d/m/Y', strtotime($request->to));
+        $cars = Carlist::whereBetween('date', [$from, $to])->get();
         $washers = Washer::all();
-        $mpesas = Carlist::where('payment_method',1)->get();
-        $cashs = Carlist::where('payment_method',2)->get();
+        $mpesas = Carlist::where('payment_method',1)->whereBetween('date', [$from, $to])->get();
+        $cashs = Carlist::where('payment_method',2)->whereBetween('date', [$from, $to])->get();
+        $total = Carlist::whereBetween('date', [$from, $to])->sum('amount');
+        $paid = Carlist::whereBetween('date', [$from, $to])->sum('discountAmount');
+        $m = Carlist::where('payment_method',1)->whereBetween('date', [$from, $to])->sum('amount');
+        $c = Carlist::where('payment_method',2)->whereBetween('date', [$from, $to])->sum('amount');
+        $f = $from;
+        $t = $to;
         return view('payments',[
             'cars'=>$cars,
             'mpesas'=>$mpesas,
             'cashs'=>$cashs,
             'washers'=>$washers,
+            'total'=>$total,
+            'paid'=>$paid,
+            'm'=>$m,
+            'c'=>$c,
+            'f'=>$f,
+            't'=>$t,
+
+        ]);
+    }
+    public function payments(){
+        $cars = Carlist::where('date',Carbon::now()->format('d/m/Y'))->get();
+        $washers = Washer::all();
+        $mpesas = Carlist::where('payment_method',1)->where('date',Carbon::now()->format('d/m/Y'))->get();
+        $cashs = Carlist::where('payment_method',2)->where('date',Carbon::now()->format('d/m/Y'))->get();
+        $total = Carlist::where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
+        $paid = Carlist::where('date',Carbon::now()->format('d/m/Y'))->sum('discountAmount');
+        $m = Carlist::where('payment_method',1)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
+        $c = Carlist::where('payment_method',2)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
+        $date = Carbon::now()->format('d/m/Y');
+        return view('payments',[
+            'cars'=>$cars,
+            'mpesas'=>$mpesas,
+            'cashs'=>$cashs,
+            'washers'=>$washers,
+            'total'=>$total,
+            'paid'=>$paid,
+            'm'=>$m,
+            'c'=>$c,
+            't'=>$date
+        ]);
+    }
+    public function washerDetail($id){
+        $date = Carbon::now()->format('d/m/Y');
+        $cars = Carlist::where('washer_id',$id)->orderByDesc('id')->get();
+        $washers = Washer::all();
+        $wash = Washer::find($id);
+        $mpesas = Carlist::where('payment_method',1)->where('washer_id',$id)->get();
+        $cashs = Carlist::where('payment_method',2)->where('washer_id',$id)->get();
+        $total = Carlist::where('date',Carbon::now()->format('d/m/Y'))->where('washer_id',$id)->sum('amount');
+        $paid = Carlist::where('date',Carbon::now()->format('d/m/Y'))->where('washer_id',$id)->sum('discountAmount');
+        $m = Carlist::where('date',Carbon::now()->format('d/m/Y'))->where('washer_id',$id)->where('payment_method',1)->sum('amount');
+        $c = Carlist::where('date',Carbon::now()->format('d/m/Y'))->where('washer_id',$id)->where('payment_method',2)->sum('amount');
+        return view('washerDetail',[
+            'cars'=>$cars,
+            'mpesas'=>$mpesas,
+            'cashs'=>$cashs,
+            'washers'=>$washers,
+            'wash'=>$wash,
+            'total'=>$total,
+            'paid'=>$paid,
+            't'=>$date,
+            'm'=>$m,
+            'c'=>$c,
+
+        ]);
+    }
+    public function filterWasher(Request $request){
+        $from = date('d/m/Y', strtotime($request->from));
+        $to = date('d/m/Y', strtotime($request->to));
+        $cars = Carlist::where('washer_id',$request->id)->whereBetween('date', [$from, $to])->get();
+        $washers = Washer::all();
+        $wash = Washer::find($request->id);
+        $total = Carlist::whereBetween('date', [$from, $to])->where('washer_id',$request->id)->sum('amount');
+        $paid = Carlist::whereBetween('date', [$from, $to])->where('washer_id',$request->id)->sum('discountAmount');
+        $m = Carlist::where('payment_method',1)->where('washer_id',$request->id)->whereBetween('date', [$from, $to])->sum('amount');
+        $c = Carlist::where('payment_method',2)->where('washer_id',$request->id)->whereBetween('date', [$from, $to])->sum('amount');
+        $mpesas = Carlist::where('payment_method',1)->where('washer_id',$request->id)->whereBetween('date', [$from, $to])->get();
+        $cashs = Carlist::where('payment_method',2)->where('washer_id',$request->id)->whereBetween('date', [$from, $to])->get();
+        $f = $from;
+        $t = $to;
+        return view('washerDetail',[
+            'cars'=>$cars,
+            'm'=>$m,
+            'c'=>$c,
+            'mpesas'=>$mpesas,
+            'cashs'=>$cashs,
+            'washers'=>$washers,
+            'wash'=>$wash,
+            'f'=>$f,
+            't'=>$t,
+            'total'=>$total,
+            'paid'=>$paid,
 
         ]);
     }
@@ -79,15 +188,16 @@ class IndexController extends Controller
         $charge->washer_id = $request->input('washer_id');
         $charge->amount = $request->input('amount');
         $charge->payment_method = $request->input('payment_method');
-        $charge->save();
         $findRate = Rate::find('1');
-        $getWasherAmount = Washer::find($request->input('washer_id'));
-        $washerAmount=$getWasherAmount->amount;
         $rate = $findRate->rate;
         $final = ($rate / 100) * $request->input('amount');
-        $finalAmount = $washerAmount+$final;
+        $finalAmount = $final;
+        $charge->discountAmount = $finalAmount;
 
-        $updateWasherAmount = Washer::where('id',$request->input('washer_id'))->update(['amount'=>$finalAmount,'rate'=>$rate]);
+        $charge->save();
+
+
+//        $updateWasherAmount = Washer::where('id',$request->input('washer_id'))->update(['amount'=>$finalAmount,'rate'=>$rate]);
         return redirect()->back()->with('success','CAR ADDED SUCCESS');
     }
     public function eRate(Request $request){

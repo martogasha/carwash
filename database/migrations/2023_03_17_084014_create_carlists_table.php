@@ -21,6 +21,7 @@ class CreateCarlistsTable extends Migration
             $table->integer('charge_id')->nullable();
             $table->integer('washer_id');
             $table->integer('amount');
+            $table->integer('discountAmount');
             $table->integer('payment_method');
             $table->timestamps();
         });

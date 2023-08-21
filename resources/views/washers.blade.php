@@ -113,7 +113,6 @@
                         </li>
                     </ul>
 
-                    <p>Washers Total <br><span style="color: blue">Today:<b style="color: black">{{\Carbon\Carbon::now()->format('d/m/Y')}}</b></span></p>Ksh<span style="font-size: 30px"> <b>{{\App\Models\Washer::sum('amount')}}</b></span>
 
                 </div>
                 @include('flash-message')
@@ -143,8 +142,6 @@
                                                         <th>Name</th>
                                                         <th>Phone</th>
                                                         <th>Rate</th>
-                                                        <th>Total</th>
-                                                        <th>Amount</th>
                                                         <th></th>
                                                     </tr>
                                                     </thead>
@@ -153,9 +150,7 @@
                                                         <tr>
                                                             <td>{{$washer->first_name}} {{$washer->last_name}}</td>
                                                             <td>{{$washer->phone}}</td>
-                                                            <td>{{$washer->rate}}%</td>
-                                                            <td>Ksh {{\App\Models\Carlist::where('washer_id',$washer->id)->where('date',\Carbon\Carbon::now()->format('d/m/Y'))->sum('amount')}}</td>
-                                                            <td>Ksh {{$washer->amount}}</td>
+                                                            <td>{{\App\Models\Rate::first()->rate}}%</td>
                                                             <td class="text-end">
                                                                 <div class="table-action">
                                                                     <a class="btn btn-sm bg-success-light view" id={{$washer->id}} href="#upcoming-appointments" data-bs-toggle="modal" data-bs-target="#edit_washer">Edit</a>

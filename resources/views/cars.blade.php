@@ -114,7 +114,30 @@
 
                 </div>
                 @include('flash-message')
-                <p style="text-align: center">Today:<b>{{\Carbon\Carbon::now()->format('d/m/Y')}}</b></p>
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-md-6 text-end">
+                        <form action="{{url('filterD')}}">
+                            @csrf
+                            <span><b>From</b></span><input type="date" name="from">
+                            <span><b>To</b></span><input type="date" name="to">
+                            <button class="btn btn-dark">Search</button>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-12 col-lg-12 col-xl-12" style="text-align: center">
+                    @if(!isset($f))
+                        <p style="font-size: large"><b>Today</b>:
+                            {{$t}}
+                        </p>
+                    @else
+                        <p style="font-size: large"><b>From</b>:
+                            {{$f}}
+                            <span><b>To</b>:</span> {{$t}}
+                        </p>
+                    @endif
 
                 <div class="row">
                     <div class="col-lg-12 col-12 form-group">
