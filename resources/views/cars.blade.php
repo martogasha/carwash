@@ -138,6 +138,7 @@
                             <span><b>To</b>:</span> {{$t}}
                         </p>
                     @endif
+                </div>
 
                 <div class="row">
                     <div class="col-lg-12 col-12 form-group">
