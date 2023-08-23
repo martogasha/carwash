@@ -97,8 +97,8 @@ class IndexController extends Controller
         $washers = Washer::all();
         $mpesas = Carlist::where('payment_method',1)->where('date',Carbon::now()->format('d/m/Y'))->get();
         $cashs = Carlist::where('payment_method',2)->where('date',Carbon::now()->format('d/m/Y'))->get();
-        $total = Carlist::where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
-        $paid = Carlist::where('date',Carbon::now()->format('d/m/Y'))->sum('discountAmount');
+        $total = Carlist::where('date',Carbon::now()->format('d/m/Y'))->where('payment_method','!=',null)->sum('amount');
+        $paid = Carlist::where('date',Carbon::now()->format('d/m/Y'))->where('payment_method','!=',null)->sum('discountAmount');
         $m = Carlist::where('payment_method',1)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
         $c = Carlist::where('payment_method',2)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
         $p = Carlist::where('payment_method',null)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
