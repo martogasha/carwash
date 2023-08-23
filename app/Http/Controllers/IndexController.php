@@ -76,6 +76,7 @@ class IndexController extends Controller
         $paid = Carlist::whereBetween('date', [$from, $to])->sum('discountAmount');
         $m = Carlist::where('payment_method',1)->whereBetween('date', [$from, $to])->sum('amount');
         $c = Carlist::where('payment_method',2)->whereBetween('date', [$from, $to])->sum('amount');
+        $p = Carlist::where('payment_method',null)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
         $f = $from;
         $t = $to;
         return view('payments',[
@@ -88,6 +89,7 @@ class IndexController extends Controller
             'm'=>$m,
             'c'=>$c,
             'f'=>$f,
+            'p'=>$p,
             't'=>$t,
 
         ]);
