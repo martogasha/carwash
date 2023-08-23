@@ -222,7 +222,6 @@
                                                     <tbody>
                                                     @foreach($washers as $washer)
                                                         <tr>
-                                                            <td>{{\App\Models\Carlist::where('washer_id',$washer->id)->first('date')}}</td>
                                                             <td><a href="{{url('washerDetail',$washer->id)}}">{{$washer->first_name}} {{$washer->last_name}}</a></td>
                                                             <td>{{$washer->phone}}</td>
                                                             <td>{{\App\Models\Rate::first()->rate}}%</td>
