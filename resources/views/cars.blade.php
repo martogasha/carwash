@@ -108,7 +108,7 @@
 
                     <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#upcoming-appointments" data-bs-toggle="modal" data-bs-target="#appt_details">Add Car</a>
+                            <a class="nav-link active" href="#upcoming-appointments" data-bs-toggle="modal" data-bs-target="#appt_details">Book Car</a>
                         </li>
                     </ul>
 
