@@ -173,16 +173,34 @@
                                                         <th>Phone Number</th>
                                                         <th>Washer</th>
                                                         <th>Amount</th>
+                                                        <th>Payment</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody id="myTable">
                                                     @foreach($cars as $car)
-                                                        <tr>
+                                                        <tr class="view" id="{{$car->id}}" data-bs-toggle="modal" data-bs-target="#payCar">
                                                             <td>{{$car->date}}</td>
                                                             <td>{{$car->number_plate}}</td>
-                                                            <td>{{$car->phone}}</td>
+                                                            @if($car->phone)
+                                                                <td>{{$car->phone}}</td>
+
+                                                            @else
+                                                                <td>N/A</td>
+
+                                                            @endif
                                                             <td>{{$car->washer->first_name}} {{$car->washer->last_name}}</td>
                                                             <td>Ksh {{$car->amount}}</td>
+                                                            @if($car->payment_method)
+                                                                @if($car->payment_method==1)
+                                                                    <td> <span class="badge rounded-pill bg-success-light">Mpesa</span></td>
+                                                                @else
+                                                                    <td> <span class="badge rounded-pill bg-primary-light">Cash</span></td>
+
+                                                                @endif
+                                                            @else
+                                                                <td>Pending</td>
+
+                                                            @endif
                                                         </tr>
                                                     @endforeach
 
@@ -203,6 +221,36 @@
     </div>
 
 </div>
+<div class="modal fade custom-modal" id="payCar">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pay for: <span id="editModalTitle" style="color:red;"></span></h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('pCar')}}" method="post">
+                @csrf
+                <input type="hidden" name="id" id="car_id">
+                <div class="modal-body">
+
+                    <div>
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <select class="form-control select" name="payment_method">
+                                <option value="1">Mpesa</option>
+                                <option value="2">Cash</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Save</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade custom-modal" id="appt_details">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -218,7 +266,7 @@
                     <div>
                         <div class="form-group">
                             <label>Number Plate</label>
-                            <input type="text" class="form-control" name="number_plate" placeholder="Number Plate">
+                            <input type="text" class="form-control" name="number_plate" placeholder="Number Plate" required>
                         </div>
                     </div>
                     <div>
@@ -242,19 +290,10 @@
                     <div>
                         <div class="form-group">
                             <label>Amount</label>
-                            <input type="text" class="form-control" name="amount" id="chargeAmount">
+                            <input type="text" class="form-control" name="amount" id="chargeAmount" required>
                         </div>
                     </div>
-                    <div>
-                        <div class="form-group">
-                            <label>Payment Method</label>
-                            <select class="form-control select" name="payment_method">
-                                <option value="1">Mpesa</option>
-                                <option value="2">Cash</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-danger">Save</button>
+                    <button type="submit" class="btn btn-danger">Book</button>
 
                 </div>
             </form>
@@ -300,6 +339,34 @@
 <!-- Mirrored from doccure-laravel.dreamguystech.com/template-cardiology/public/patient-dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Oct 2022 14:55:09 GMT -->
 </html>
 <script>
+    $(document).on('click','.view',function () {
+        $value = $(this).attr('id');
+        $.ajax({
+            type:"get",
+            url:"{{url('payCar')}}",
+            data:{'id':$value},
+            success:function (data) {
+                getResponse(data);
+                console.log(data);
+
+            },
+            error:function (error) {
+                console.log(error)
+                alert('error')
+
+            }
+
+        });
+    });
+    var data;
+    function getResponse(response) {
+        data = response;
+
+        $('#editModalTitle').text(data.number_plate);
+        $('#car_id').val(data.id);
+
+
+    }
     $('#carCharge').change(function(){
         $value = $(this).val();
         $.ajax({

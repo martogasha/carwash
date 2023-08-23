@@ -17,12 +17,12 @@ class CreateCarlistsTable extends Migration
             $table->id();
             $table->string('date');
             $table->string('number_plate');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->integer('charge_id')->nullable();
             $table->integer('washer_id');
             $table->integer('amount');
             $table->integer('discountAmount');
-            $table->integer('payment_method');
+            $table->integer('payment_method')->nullable();
             $table->timestamps();
         });
     }

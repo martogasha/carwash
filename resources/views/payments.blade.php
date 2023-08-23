@@ -154,6 +154,13 @@
                                     </li>
                                 </ul>
                             </nav>
+                            <nav>
+                                <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                                    <li class="nav-item" id="cashNav">
+                                        <a href="#pat_cash" data-bs-toggle="tab" style="color: blue" id="button_cash">Pending Payment <span style="color: black;font-size: larger"><i style="font-size: smaller"><br>Ksh</i> <b>{{$p}}</b></span></a>
+                                    </li>
+                                </ul>
+                            </nav>
 
 <br>
                             <div class="tab-content pt-0">
@@ -182,8 +189,10 @@
                                                             @if($car->payment_method==1)
                                                                 <td><span class="badge rounded-pill bg-success-light">Mpesa</span></td>
 
-                                                            @else
+                                                            @elseif($car->payment_method==2)
                                                                 <td><span class="badge rounded-pill bg-primary-light">Cash</span></td>
+                                                            @else
+                                                                <td>Pending</td>
 
                                                             @endif
 

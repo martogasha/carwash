@@ -24,6 +24,17 @@ class IndexController extends Controller
 
         ]);
     }
+    public function payCar(Request $request){
+        $output = "";
+        $car = Carlist::find($request->id);
+        $output =$car;
+        return response($output);
+    }
+    public function pCar(Request $request){
+        $updatePayment = Carlist::where('id',$request->id)->update(['payment_method'=>$request->payment_method]);
+        return redirect()->back()->with('success','PAYMENT SUCCESS');
+
+    }
     public function filterD(Request $request){
         $from = date('d/m/Y', strtotime($request->from));
         $to = date('d/m/Y', strtotime($request->to));
@@ -82,7 +93,7 @@ class IndexController extends Controller
         ]);
     }
     public function payments(){
-        $cars = Carlist::where('date',Carbon::now()->format('d/m/Y'))->get();
+        $cars = Carlist::where('date',Carbon::now()->format('d/m/Y'))->orderByDesc('id')->get();
         $washers = Washer::all();
         $mpesas = Carlist::where('payment_method',1)->where('date',Carbon::now()->format('d/m/Y'))->get();
         $cashs = Carlist::where('payment_method',2)->where('date',Carbon::now()->format('d/m/Y'))->get();
@@ -90,6 +101,7 @@ class IndexController extends Controller
         $paid = Carlist::where('date',Carbon::now()->format('d/m/Y'))->sum('discountAmount');
         $m = Carlist::where('payment_method',1)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
         $c = Carlist::where('payment_method',2)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
+        $p = Carlist::where('payment_method',null)->where('date',Carbon::now()->format('d/m/Y'))->sum('amount');
         $date = Carbon::now()->format('d/m/Y');
         return view('payments',[
             'cars'=>$cars,
@@ -100,6 +112,7 @@ class IndexController extends Controller
             'paid'=>$paid,
             'm'=>$m,
             'c'=>$c,
+            'p'=>$p,
             't'=>$date
         ]);
     }

@@ -25,6 +25,7 @@ Route::get('charges', [IndexController::class, 'charges']);
 Route::get('filterDate', [IndexController::class, 'filterDate']);
 Route::get('filterD', [IndexController::class, 'filterD']);
 Route::get('filterWasher', [IndexController::class, 'filterWasher']);
+Route::get('payCar', [IndexController::class, 'payCar']);
 Route::get('editCharge', [IndexController::class, 'editCharge']);
 Route::get('editRate', [IndexController::class, 'editRate']);
 Route::get('editWasher', [IndexController::class, 'editWasher']);
@@ -35,4 +36,5 @@ Route::post('eWashers', [IndexController::class, 'eWashers']);
 Route::post('eRate', [IndexController::class, 'eRate']);
 Route::post('eCharge', [IndexController::class, 'eCharge']);
 Route::post('addCharge', [IndexController::class, 'addCharge']);
+Route::post('pCar', [IndexController::class, 'pCar']);
 
