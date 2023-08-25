@@ -193,22 +193,25 @@
                     <div>
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                            <input type="text" class="form-control" name="first_name" placeholder="First Name" id="first_na">
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                            <input type="text" class="form-control" name="last_name" placeholder="Last Name" id="last_na">
+                            <span style="color: red" id="name_verification"><b>Name Already Exist</b></span>
+
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input type="text" class="form-control" name="phone" placeholder="Phone Number">
+                            <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="add_phone">
+                            <span style="color: red" id="phone_verification"><b>Phone Number Already Exist</b></span>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-danger">Save</button>
+                    <button type="submit" class="btn btn-danger" id="saveButton">Save</button>
 
                 </div>
             </form>
@@ -293,6 +296,9 @@
 <!-- Mirrored from doccure-laravel.dreamguystech.com/template-cardiology/public/patient-dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Oct 2022 14:55:09 GMT -->
 </html>
 <script>
+    $('#phone_verification').hide();
+    $('#name_verification').hide();
+
     $(document).on('click','.view',function () {
         $value = $(this).attr('id');
         $.ajax({
@@ -313,10 +319,7 @@
         });
     });
 
-    var data;
-    function getResponse(response) {
-        data = response;
-
+    function getResponse(data) {
         $('#washer_id').val(data.id);
         $('#first_name').val(data.first_name);
         $('#last_name').val(data.last_name);
@@ -324,4 +327,105 @@
         $('#editModalTitle').text(data.first_name+' '+data.last_name);
 
     }
+    $('#add_phone').on('keyup',function () {
+        $value = $(this).val();
+        $.ajax({
+            type:"get",
+            url:"{{url('getWasher')}}",
+            data:{'phone':$value},
+            success:function (data) {
+                getResponse(data);
+                console.log(data);
+
+            },
+            error:function (error) {
+                console.log(error)
+                alert('error')
+
+            }
+
+        });
+        function getResponse(data) {
+           if (data.phone==$('#add_phone').val()){
+               $('#phone_verification').show();
+               $('#saveButton').hide();
+
+
+           }
+           else {
+               $('#phone_verification').hide();
+               $('#saveButton').show();
+
+           }
+
+        }
+    });
+    $('#last_na').on('keyup',function () {
+        $value = $(this).val();
+        $value_one = $('#first_na').val();
+        $.ajax({
+            type:"get",
+            url:"{{url('getName')}}",
+            data:{'name':$value,'first_name':$value_one},
+            success:function (data) {
+                getResponse(data);
+                console.log(data);
+
+            },
+            error:function (error) {
+                console.log(error)
+                alert('error')
+
+            }
+
+        });
+        function getResponse(data) {
+            if (data.last_name==$('#last_na').val()){
+                $('#name_verification').show();
+                $('#saveButton').hide();
+
+
+            }
+            else {
+                $('#name_verification').hide();
+                $('#saveButton').show();
+
+            }
+
+        }
+    });
+    $('#first_na').on('keyup',function () {
+        $value = $(this).val();
+        $value_one = $('#last_na').val();
+        $.ajax({
+            type:"get",
+            url:"{{url('getName')}}",
+            data:{'name':$value_one,'first_name':$value},
+            success:function (data) {
+                getRespons(data);
+                console.log(data);
+
+            },
+            error:function (error) {
+                console.log(error)
+                alert('error')
+
+            }
+
+        });
+        function getRespons(data) {
+            if (data.last_name==$('#last_na').val()){
+                $('#name_verification').show();
+                $('#saveButton').hide();
+
+
+            }
+            else {
+                $('#name_verification').hide();
+                $('#saveButton').show();
+
+            }
+
+        }
+    });
 </script>

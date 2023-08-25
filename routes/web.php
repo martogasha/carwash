@@ -30,6 +30,8 @@ Route::get('editCharge', [IndexController::class, 'editCharge']);
 Route::get('editRate', [IndexController::class, 'editRate']);
 Route::get('editWasher', [IndexController::class, 'editWasher']);
 Route::get('getAmount', [IndexController::class, 'getAmount']);
+Route::get('getWasher', [IndexController::class, 'getWasher']);
+Route::get('getName', [IndexController::class, 'getName']);
 Route::post('addWashers', [IndexController::class, 'addWashers']);
 Route::post('addCar', [IndexController::class, 'addCar']);
 Route::post('eWashers', [IndexController::class, 'eWashers']);

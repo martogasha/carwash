@@ -272,7 +272,8 @@
                     <div>
                         <div class="form-group">
                             <label>Phone No</label>
-                            <input type="text" class="form-control" name="phone" placeholder="Phone Number">
+                            <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="myform_phone">
+                            <span style="color: red" id="phone_error">INPUT VALID PHONE NUMBER</span>
                         </div>
                     </div>
 
@@ -293,7 +294,7 @@
                             <input type="text" class="form-control" name="amount" id="chargeAmount" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-danger">Book</button>
+                    <button type="submit" class="btn btn-danger" id="bookButton">Book</button>
 
                 </div>
             </form>
@@ -391,5 +392,32 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+    });
+
+    function validatePhoneNumber(input_str) {
+        var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+        return re.test(input_str);
+    }
+
+    function validateForm(event) {
+        var phone = $('#myform_phone').val();
+        if (!validatePhoneNumber(phone)) {
+            $('#phone_error').show();
+            $('#bookButton').hide();
+
+        }
+        else {
+            $('#phone_error').hide();
+            $('#bookButton').show();
+
+
+        }
+        event.preventDefault();
+    }
+    $('#phone_error').hide();
+
+    $('#myform_phone').on('keyup',function () {
+        validateForm();
     });
 </script>

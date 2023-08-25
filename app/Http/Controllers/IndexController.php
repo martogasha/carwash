@@ -94,6 +94,18 @@ class IndexController extends Controller
 
         ]);
     }
+    public function getWasher(Request $request){
+        $output = "";
+        $washers = Washer::where('phone',$request->phone)->first();
+        $output = $washers;
+        return response($output);
+    }
+    public function getName(Request $request){
+        $output = "";
+        $washers = Washer::where('last_name','LIKE','%'.$request->name.'%')->where('first_name','LIKE','%'.$request->first_name.'%')->first();
+        $output = $washers;
+        return response($output);
+    }
     public function payments(){
         $cars = Carlist::where('date',Carbon::now()->format('d/m/Y'))->orderByDesc('id')->get();
         $washers = Washer::all();
