@@ -193,13 +193,13 @@
                     <div>
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" class="form-control" name="first_name" placeholder="First Name" id="first_na">
+                            <input type="text" class="form-control" name="first_name" placeholder="First Name" id="first_na" required>
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" name="last_name" placeholder="Last Name" id="last_na">
+                            <input type="text" class="form-control" name="last_name" placeholder="Last Name" id="last_na" required>
                             <span style="color: red" id="name_verification"><b>Name Already Exist</b></span>
 
                         </div>
@@ -207,7 +207,7 @@
                     <div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="add_phone">
+                            <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="add_phone" required>
                             <span style="color: red" id="phone_verification"><b>Phone Number Already Exist</b></span>
                         </div>
                     </div>
@@ -235,19 +235,19 @@
                     <div>
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" class="form-control" name="first_name" id="first_name">
+                            <input type="text" class="form-control" name="first_name" id="first_name" required>
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" name="last_name" id="last_name">
+                            <input type="text" class="form-control" name="last_name" id="last_name" required>
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input type="text" class="form-control" name="phone" id="phone">
+                            <input type="text" class="form-control" name="phone" id="phone" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-danger">Save</button>
