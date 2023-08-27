@@ -88,8 +88,13 @@
                                 <img src="assets/img/patients/patient.jpg" alt="User Image" class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>{{\Illuminate\Support\Facades\Auth::user()->name}}</h6>
-                                <p class="text-muted mb-0">Patient</p>
+                                @if(\Illuminate\Support\Facades\Auth::check())
+                                    <h6>{{\Illuminate\Support\Facades\Auth::user()->name}}</h6>
+                                @else
+                                    <script>window.location = "/login";</script>
+
+                                @endif
+                                    <p class="text-muted mb-0">Patient</p>
                             </div>
                         </div>
                         <form action="{{url('logout')}}" method="post" id="logout">
