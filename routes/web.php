@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+Route::post('Login', [AuthController::class, 'login'])->name('Login');
 Route::get('cars', [IndexController::class, 'cars']);
 Route::get('washers', [IndexController::class, 'washers']);
 Route::get('payments', [IndexController::class, 'payments']);
@@ -39,4 +47,3 @@ Route::post('eRate', [IndexController::class, 'eRate']);
 Route::post('eCharge', [IndexController::class, 'eCharge']);
 Route::post('addCharge', [IndexController::class, 'addCharge']);
 Route::post('pCar', [IndexController::class, 'pCar']);
-
