@@ -88,13 +88,15 @@
                                 <img src="assets/img/patients/patient.jpg" alt="User Image" class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>Richard Wilson</h6>
+                                <h6>{{\Illuminate\Support\Facades\Auth::user()->name}}</h6>
                                 <p class="text-muted mb-0">Patient</p>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="patient-dashboard.html">Dashboard</a>
-                        <a class="dropdown-item" href="profile-settings.html">Profile Settings</a>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <form action="{{url('logout')}}" method="post" id="logout">
+                            @csrf
+                            <a class="dropdown-item" href="javascript:document.getElementById('logout').submit();">Logout</a>
+
+                        </form>
                     </div>
                 </li>
             </ul>
